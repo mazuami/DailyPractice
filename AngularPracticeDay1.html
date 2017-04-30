@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script src="AngularPracticeDay1.js" type="text/javascript"></script> 
+    </head>
+    <body ng-app="myApp">
+        
+        <script type="text/ng-template" id="my-info-msg-id">
+            <strong> {{ msg }}</strong>
+                <br>
+                <button ng-click="displayMessage()"> Directive1</button>
+            </script>
+            
+        
+        <div ng-controller="ParentController1" style="border:1px solid blue;margin: 3px; padding: 5px;">
+            <h1> Parent Controller</h1>
+            a = {{ a }} <br>
+            b = {{ b }} <br>
+            
+            sum = {{ a + b }}
+            
+            <button ng-click=doCalculate()> Emit</button>
+            <button ng-click=doCalculateBroacast() >BroadCast </button>
+            <button ng-click=doCalculateBroadCastRoot() >Root Broadcast</button>
+            <div ng-controller="ChildController"  style="border:1px solid green;margin: 3px; padding: 5px;">
+                <h1> Child Controller</h1>
+                
+            </div>
+        </div>
+        <div ng-controller="ParentController2"  style="border:1px solid blue;margin: 3px; padding: 5px;">
+            <h1> Sibling Controller</h1>
+            c ={{ c }} <br>
+            d ={{ d }} <br>
+            
+            sum = {{ c + d }}
+            
+            
+        </div>
+        <div style="border :2px solid  ;padding:5px;">
+            <h3> Under standing $eval $parse  $interpolate</h3>
+            <div ng-controller="myctrl">
+                <p>use of $eval - it evaluates angular related expreession with respect to $scope, It also has the option to 
+                    provide the local values which can be use in the evaluation of the expression .First the $eval will look inside the local and then tken from scope. $eval uses $parese behind the scene</p>
+                a = {{ a }}<br>
+                
+                b = {{ b }}<br>
+                
+                <button ng-click="doTheCal()" > Calculate </button>
+        
+                <br>
+                <p>use of $parse - $parse doesn't work on any scope data but it evaltes the expression  returns a function template 
+                on which the values can be applied ,$scope is passed to the returned template , So parse can be used against different the $scope,$rootScope</p>
+                a = {{ a_parse }}
+                b = {{ b_parse }}
+                
+                result (using scope object - var result=$parse("a_parse * b_parse" ));$scope.res1=result($scope) = {{ res1 }} <br>
+                result (using local object long expression - var result=$parse("a_parse * b_parse" ));$scope.res2=result({a: 40,b: 50}); = 
+                {{ res2 }} <br>
+                result (using local object short expression- $scope.result= $parse("a * b")({a:30,b:10});) = {{ res }} <br>
+                cityname for object = {{ cityname }} <br>
+                
+                <button ng-click="doTheCalParse()" > Calculate_Parse </button>
+        
+                
+                <p>use of $interpolate - $interpolate translate the expression as string , so the it has to be fed as angular expression
+                    $interpolate uses $paresbehind , it cannot change the valuesof the scope or object its using in the expression .
+                    It also uses filter against the expression
+                    
+                </p>
+                a = {{ a_interpolate }} <br>
+                b = {{ b_interpolate }} <br>
+                
+                result (var res= $interpolate(" {{ a_interpolate * b_interpolate }} ");  $scope.res3=res($scope);)= {{ res3 }} <br>
+                
+                
+                <button ng-click="doTheCalInterpolate()"> Calculate_Interpolate</button>
+                
+            </div>
+        </div>
+        
+        <div ng-controller="CustomeDirectivesController">
+            
+            <h2> Custom Directives</h2>
+            <p> Directive are of various types : Componenets - Containes its own HTML elements , Decorators - Enhances functionality of existing cutomers ,Templating - Which manupulate the DOM elements and have its own templating.A component oriented directivs return html
+                in the form of template
+            </p>
+            <h4> Directives used below</h4>
+            <div my-info-msg>
+            </div>
+            <div my-info-msg2>
+            </div>
+            <br>
+            {{ anotherMessage }}
+        </div>
+        
+        <div style="border : 2px solid blue; margin: 3px ;padding :5px">
+        <div ng-controller="CustomDirectivesController2">
+            <h2> Customer Directive2 </h2>
+            <div>
+                <input type="text" ng-model="search">
+                <button ng-click="getTheEmployee()">Search</button>
+                
+            </div>
+            <div  employee-details ng-if="empId != undefined"></div>
+            
+            
+            
+        </div>
+        </div>    
+        
+        
+    </body>
+</html>
